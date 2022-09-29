@@ -4,13 +4,20 @@ import Form from './components/form/form'
 import theme from './mui-theme'
 import { ThemeProvider } from '@mui/material/styles';
 
+import { styled } from '@mui/system';
+
+
+const AppWrapper = styled('div')({
+  marginTop: '40px',
+});
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <AppWrapper className="App">
         <Header title="Compte-Rendu d'Intervention" />
         <Form />
-      </div>
+      </AppWrapper>
     </ThemeProvider>
 
   );
