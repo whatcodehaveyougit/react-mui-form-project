@@ -1,21 +1,96 @@
 import { Container } from "@mui/system";
-import { Button } from '@mui/material/';
+import { 
+    Button,
+    Grid,
+    TextField
+} from '@mui/material/';
+import { useState } from 'react'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { Formik, Field, Form, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
 
 
-const Form = () => {
+const validationSchema = Yup.object().shape({
+    clientName: Yup.string().min(3, "It's too short").required("Required"),
+    // dateOfIntervention: Yup.string().required("Required"),
+    // timeOfIntervention: Yup.string().required("Required"),
+    // clientAddress: Yup.string().required("Required"),
+    // photosOfIntervention: Yup.string().required("Required"),
+    // appoinmentType: Yup.string().oneOf(["", ""], "Required").required("Required"),
+    clientEmail: Yup.string().email("Enter valid email").required("Required"),
+})
+
+const initialValues = {
+    clientName: '',
+    dateOfIntervention: '',
+    timeOfIntervention: '',
+    clientAddress: '',
+    photosOfIntervention: [],
+    appoinmentType: '',
+    clientEmail: ''
+
+}
+
+const UserForm = () => {
+
+    // const [ values, setValues ] = useState( initialValues );
+
+    // const handleInputChange = ( event ) => {
+    //     const { name, value } = event.target;
+    //     console.log( name );
+    //     console.log( value );
+    //     setValues({
+    //         ...values, 
+    //         [name]: value
+    //     })
+    // }
+
+    const onSubmit = (values, props) => {
+        console.log( 'hello')
+
+        console.log(values)
+        console.log(props)
+
+        // setTimeout(() => {
+
+        //     props.resetForm()
+        //     props.setSubmitting(false)
+        // }, 2000)
+    }
+
+    console.log( initialValues );
+
     return (
         <Container>
-            <form>
-                <Button
-                    size="large"
-                    color="primary"
-                    variant="contained"
-                >Button</Button>
 
-            </form>
+            <Formik 
+                initialValues={initialValues} 
+                validationSchema={validationSchema} 
+                onSubmit={onSubmit}>
+                <Form>
+                    <Field as={TextField} fullWidth name="clientName" label='Client Name'
+                        placeholder="Enter your name" helperText={<ErrorMessage name="clientName" />} />
+                    <Field as={TextField} fullWidth name="clientEmail" label='Client Email'
+                        placeholder="Enter your email" helperText={<ErrorMessage name="clientEmail" />} />
+                    {/* <Field as={DateTimePicker} fullWidth name="dateTime" label='Client Email'
+                        placeholder="Enter your email" helperText={<ErrorMessage name="clientEmail" />} /> */}
+
+                    <Button
+                        size="large"
+                        type="submit"
+                        color="primary"
+                        variant="contained"
+                        >Button
+                    </Button>
+                </Form>
+
+
+                
+
+            </Formik>
+
         </Container>
-
     )
 }
 
-export default Form;
+export default UserForm;
