@@ -1,11 +1,4 @@
-import { Container } from "@mui/system";
-import { 
-    Button,
-    Grid,
-    TextField
-} from '@mui/material/';
 import { useState } from 'react'
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
@@ -61,27 +54,27 @@ const UserForm = () => {
     console.log( initialValues );
 
     return (
-        <Container>
+        <div>
 
             <Formik 
                 initialValues={initialValues} 
                 validationSchema={validationSchema} 
                 onSubmit={onSubmit}>
                 <Form>
-                    <Field as={TextField} fullWidth name="clientName" label='Client Name'
+                    <Field as="input" fullWidth name="clientName" label='Client Name'
                         placeholder="Enter your name" helperText={<ErrorMessage name="clientName" />} />
-                    <Field as={TextField} fullWidth name="clientEmail" label='Client Email'
+                    <Field as="input" fullWidth name="clientEmail" label='Client Email'
                         placeholder="Enter your email" helperText={<ErrorMessage name="clientEmail" />} />
                     {/* <Field as={DateTimePicker} fullWidth name="dateTime" label='Client Email'
                         placeholder="Enter your email" helperText={<ErrorMessage name="clientEmail" />} /> */}
 
-                    <Button
+                    <button
                         size="large"
                         type="submit"
                         color="primary"
                         variant="contained"
                         >Button
-                    </Button>
+                    </button>
                 </Form>
 
 
@@ -89,7 +82,7 @@ const UserForm = () => {
 
             </Formik>
 
-        </Container>
+        </div>
     )
 }
 
