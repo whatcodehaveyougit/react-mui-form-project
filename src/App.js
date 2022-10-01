@@ -15,7 +15,7 @@ function App() {
   return (
     // <ThemeProvider theme={theme}>
     //   <AppWrapper className="App">
-      <div>
+      <div className='App'>
         <Header title="Compte-Rendu d'Intervention" />
         <Form />
       </div>
