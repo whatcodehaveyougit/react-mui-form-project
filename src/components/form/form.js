@@ -18,6 +18,8 @@ const validationSchema = Yup.object().shape({
 
 const onSubmit = values => {
     console.log( "Form Submitted" + JSON.stringify(values) )
+    localStorage.setItem('values', JSON.stringify( values ) );
+
     console.log('hello')
 }
 
@@ -212,6 +214,7 @@ const UserForm = () => {
                 <div className='form-control-wrapper'>
                     <button
                         type="submit"
+                        className='btn primary-bg'
                         >Button
                     </button>
                 </div> 
