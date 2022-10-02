@@ -7,7 +7,7 @@ const Header = ( props ) => {
             src="https://www.selfcity.fr/wp-content/uploads/2021/10/logo-MENU.svg" 
             alt="self-city-logo"
             />
-            <h1 class="primary">{ props.title }</h1>
+            <h1 className="primary">{ props.title }</h1>
         </div>
 
     )

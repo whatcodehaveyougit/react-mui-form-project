@@ -1,6 +1,8 @@
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
 import Header from './components/header/header'
-import Form from './components/form/form'
+import Form from './routes/form/form'
+import FormSubmitted from './routes/form-submitted/form-submitted';
 
 function App() {
   return (
@@ -8,7 +10,12 @@ function App() {
       <div className='App'>
         <Header title="Compte-Rendu d'Intervention" />
         <div className="container">
-          <Form />
+          <Routes>
+            <Route path="/form" element={<Form/>} />
+            <Route path="/form/:clientName" element={<Form/>} />
+
+            <Route path="/form-submitted" element={<FormSubmitted/>} />
+          </Routes>
         </div>
       </div>
 

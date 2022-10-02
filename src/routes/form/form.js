@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import { useFormik, ErrorMessage } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useNavigate } from 'react-router-dom';
 import './form.scss'
+
 
 const validationSchema = Yup.object().shape({
     clientName: Yup.string().min(3, "It's too short").required("Required"),
@@ -16,12 +17,6 @@ const validationSchema = Yup.object().shape({
     // clientEmail: Yup.string().email("Enter valid email")
 })
 
-const onSubmit = values => {
-    console.log( "Form Submitted" + JSON.stringify(values) )
-    localStorage.setItem('values', JSON.stringify( values ) );
-
-    console.log('hello')
-}
 
 // const initialValues = {
 //     clientName: '',
@@ -36,6 +31,18 @@ const onSubmit = values => {
 
 
 const UserForm = () => {
+
+    const navigate = useNavigate();
+
+    const onSubmit = (values, submitProps) => {
+        console.log( "Form Submitted" + JSON.stringify(values) )
+        submitProps.setSubmitting(false)
+        submitProps.resetForm()
+        localStorage.setItem('values', JSON.stringify( values ) );
+        navigate('/form-submitted');
+    
+        console.log('hello')
+    }
 
     const formik = useFormik({
         initialValues: {
