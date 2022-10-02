@@ -2,6 +2,10 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom';
 import './form.scss'
+import Input from '../../reuseableComponents/input/input'
+import Button from '../../reuseableComponents/button/button'
+import Textarea from '../../reuseableComponents/textarea/textarea'
+import SelectDropdown from '../../reuseableComponents/selectDropdown/selectDropdown'
 
 
 const validationSchema = Yup.object().shape({
@@ -18,18 +22,6 @@ const validationSchema = Yup.object().shape({
 })
 
 
-// const initialValues = {
-//     clientName: '',
-//     dateOfIntervention: '',
-//     timeOfIntervention: '',
-//     nameOfIntervention: '',
-//     clientAddress: '',
-//     photosOfIntervention: [],
-//     appoinmentType: '',
-//     clientEmail: '',
-// }
-
-
 const UserForm = () => {
 
     const navigate = useNavigate();
@@ -39,9 +31,7 @@ const UserForm = () => {
         submitProps.setSubmitting(false)
         submitProps.resetForm()
         localStorage.setItem('values', JSON.stringify( values ) );
-        navigate('/form-submitted');
-    
-        console.log('hello')
+        navigate('/form-submitted');    
     }
 
     const formik = useFormik({
@@ -63,76 +53,29 @@ const UserForm = () => {
         validationSchema
     })
 
-    // console.log( formik.values )
-   
-    // console.log( formik.touched )
+    const clientPrescenceOptions = [
+        {
+            value: "clientPresent",
+            text: "Client signed"
+        },
+        {
+            value: "clientNotPresent",
+            text: "Nobody was there"
+        },
+    ]
+
 
     return (
         <>
             <form onSubmit={formik.handleSubmit}>      
+                <Input fieldName="clientName" fieldLabel="Name of Client: " formik={formik} />
+                <Input fieldName="dateOfIntervention" fieldLabel="Date of Intervention: : " formik={formik} />
+                <Input fieldName="timeOfIntervention" fieldLabel="Time of Intervention: " formik={formik} />
+                <Input fieldName="nameOfIntervention" fieldLabel="Name of Intervention: " formik={formik} />
+                <Input fieldName="clientEmail" fieldLabel="Email of Client: " formik={formik} />
+
                 <div className="form-control-wrapper">
-                    <label>Name of Client: </label>
-                    <input
-                        type="text"
-                        id="clientName"
-                        name="clientName"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        values={formik.values.clientName}
-                    ></input>  
-                    { formik.touched.clientName && formik.errors.clientName ? <div className='error'>{formik.errors.clientName}</div> : null}    
-                </div>
-                <div className='form-control-wrapper'>
-                    <label>Date of Intervention: </label>
-                    <input
-                        type="date"
-                        id="dateOfIntervention"
-                        name="dateOfIntervention"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.name}
-                    ></input>
-                    { formik.touched.dateOfIntervention && formik.errors.dateOfIntervention ? <div className='error'>{formik.errors.dateOfIntervention}</div> : null}    
-                </div>
-                <div className='form-control-wrapper'>
-                    <label>Time of Intervention: </label>
-                    <input
-                        type="time"
-                        id="timeOfIntervention"
-                        name="timeOfIntervention"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.timeOfIntervention}
-                    ></input> 
-                    {  formik.touched.timeOfIntervention && formik.errors.timeOfIntervention ? <div className='error'>{formik.errors.timeOfIntervention}</div> : null }    
-                </div>
-                <div className="form-control-wrapper">
-                    <label>Name of Intervention: </label>
-                    <input
-                        type="text"
-                        id="nameOfIntervention"
-                        name="nameOfIntervention"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.nameOfIntervention}
-                    ></input>  
-                    { formik.touched.nameOfIntervention && formik.errors.nameOfIntervention ? <div className='error'>{formik.errors.nameOfIntervention}</div> : null}    
-                </div>
-                <div className="form-control-wrapper">
-                    <label>Photos of Intervention: </label>
-                    <input
-                        type="file"
-                        multiple
-                        id="photosOfIntervention"
-                        name="photosOfIntervention"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.photosOfIntervention}
-                    ></input>  
-                    { formik.touched.photosOfIntervention && formik.errors.photosOfIntervention ? <div className='error'>{formik.errors.photosOfIntervention}</div> : null}    
-                </div>
-                <div className="form-control-wrapper">
-                    <label>What type of app was it? </label>
+                    <label>What type of appointment was it? </label>
                     <select 
                         id="appoinmentType"
                         name="appoinmentType"
@@ -150,80 +93,39 @@ const UserForm = () => {
                         : null}    
                 </div>
                 { formik.values.appoinmentType == "sav" && (
-                <div className="form-control-wrapper">
-                    <label>Was the problem resolved? </label>
-                    <select 
-                        id="wasProblemResolved"
-                        name="wasProblemResolved"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.appoinmentType}
-                    >
-                        <option value="yes">Yes</option>
-                        <option value="noReason1">No, need to return</option>
-                        <option value="noReason2">No, order material and return</option> 
-                        <option value="noReason3">No, not sure why</option>
-                    </select>
-                </div>
-            )}
-                <div className="form-control-wrapper">
-                    <label>Report (visable by client): </label>
-                    <input
-                        type="textarea"
-                        id="reportPublic"
-                        name="reportPublic"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.reportPublic}
-                    ></input>  
-                    { formik.touched.reportPublic && formik.errors.reportPublic ? <div className='error'>{formik.errors.reportPublic}</div> : null}    
-                </div>
-                <div className="form-control-wrapper">
-                    <label>Remarks for support (invisible to client): </label>
-                    <input
-                        type="textarea"
-                        id="reportPrivate"
-                        name="reportPrivate"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.reportPrivate}
-                    ></input>  
-                    { formik.touched.reportPrivate && formik.errors.reportPrivate ? <div className='error'>{formik.errors.reportPrivate}</div> : null}    
-                </div>
-                <div className="form-control-wrapper">
-                    <label>What type of app was it? </label>
-                    <select 
-                        id="clientPrescence"
-                        name="clientPrescence"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.clientPrescence}
+                <>
+                    <div className="form-control-wrapper">
+                        <label>Was the problem resolved? </label>
+                        <select 
+                            id="wasProblemResolved"
+                            name="wasProblemResolved"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.appoinmentType}
                         >
-                        <option value="clientPresent">Client signed</option>
-                        <option value="clientNotPresent">Nobody was there</option>
-                    </select>
-                    { formik.touched.clientPrescence && formik.errors.clientPrescence 
-                        ? <div className='error'>{formik.errors.clientPrescence}</div> 
-                        : null}    
-                </div>
-                <div className="form-control-wrapper">
-                    <label>Email of Client: </label>
-                    <input
-                        type="text"
-                        id="clientEmail"
-                        name="clientEmail"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        values={formik.values.clientEmail}
-                    ></input>  
-                    { formik.touched.clientEmail && formik.errors.clientEmail ? <div className='error'>{formik.errors.clientEmail}</div> : null}    
-                </div>
+                            <option value="yes">Yes</option>
+                            <option value="noReason1">No, need to return</option>
+                            <option value="noReason2">No, order material and return</option> 
+                            <option value="noReason3">No, not sure why</option>
+                        </select>
+                    </div>
+                    <SelectDropdown 
+                        fieldName="clientPrescence" 
+                        fieldLabel="Was client present? " 
+                        formik={formik} 
+                        options={clientPrescenceOptions} />
+                </>
+            )}
+               <Textarea fieldName="reportPublic" fieldLabel="Report (visable by client):  " formik={formik} />
+               <Textarea fieldName="reportPrivate" fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
+
+                
                 <div className='form-control-wrapper'>
-                    <button
+                    <Button
                         type="submit"
-                        className='btn primary-bg'
-                        >Button
-                    </button>
+                        classes="btn primary-bg"
+                        text="Submit Form"
+                    ></Button>
                 </div> 
 
             </form>
