@@ -14,25 +14,53 @@ const validationSchema = Yup.object().shape({
     // timeOfIntervention: Yup.string().required("Required"),
     // nameOfIntervention: Yup.string().required("Required"),
     // clientAddress: Yup.string().required("Required"),
-    clientEmail: Yup.string().email("Enter valid email"),
-    appoinmentType: Yup.string().oneOf(["quote", "sav", "intervention", "cancelled"], "Required").required("Required"),
+    // clientEmail: Yup.string().email("Enter valid email"),
+    appointmentType: Yup.string().oneOf(["quote", "sav", "intervention", "cancelled"], "Required").required("Required"),
     
-    // Optional part of form - Devis 
-    reportPrivate: Yup.string().required("Required"),
-    arrivalTimeAtClient: Yup.string().required("Required"),
-    reportPublic: Yup.string().required("Required"),
-    durationOfIntervention: Yup.string().required("Required"),
+    // Optional part of form - Quote 
+    reportPublic: Yup.string().when('appointmentType', {
+        is: "quote",
+        then: Yup.string().required('Required'),
+    }),
+    arrivalTimeAtClient: Yup.string().when('appointmentType', {
+        is: "quote" || "cancelled",
+        then: Yup.string().required('Required'),
+    }),
+    durationOfIntervention: Yup.string().when('appointmentType', {
+        is: "quote" || "cancelled",
+        then: Yup.string().required('Required'),
+    }),
 
     // Optional part of form - SAV 
-    wasProblemResolved: Yup.string().oneOf(["yes", "noReason1", "noReason2", "noReason3"], "Required").required("Required"),
-    clientPrescence: Yup.string().oneOf(["clientPresent", "clientNotPresent"], "Required").required("Required"),
-
+    wasProblemResolved: Yup.string().when('appointmentType', {
+        is: "sav",
+        then: Yup.string().oneOf(["yes", "noReason1", "noReason2", "noReason3"], "Required").required("Required")
+        .required('Required'),
+    }),
+    clientPrescence: Yup.string().when('appointmentType', {
+        is: "sav" || "intervention",
+        then: Yup.string().oneOf(["clientPresent", "clientNotPresent"], "Required").required("Required")
+        .required('Required'),
+    }),
+    
     // Optional part of form - Intervention     
-    wasClientBilled: Yup.string().required("Required"),
-
+    wasClientBilled: Yup.string().when('appointmentType', {
+        is: "intervention",
+        then: Yup.string().oneOf(["option1", "option2", "option3", "option4"], "Required").required("Required")
+        .required('Required'),
+    }),
+    clientPrescence: Yup.string().when('appointmentType', {
+        is: "intervention",
+        then: Yup.string().oneOf(["clientPresent", "clientNotPresent"], "Required").required("Required")
+        .required('Required'),
+    }),
+    
     // Optional part of form - RDV cancelled
-    reasonsForCancellation: Yup.string().required("Required"),
-
+    reasonsForCancellation: Yup.string().when('appointmentType', {
+        is: "cancelled",
+        then: Yup.string().required("Required")
+        .required('Required'),
+    }),
 })
 
 
@@ -56,7 +84,7 @@ const UserForm = () => {
             clientAddress: '',
             photosOfIntervention: [],
             clientEmail: '',
-            appoinmentType: '',
+            appointmentType: '',
             wasProblemResolved: '',
             reportPublic: '',
             reportPrivate: '',
@@ -108,7 +136,7 @@ const UserForm = () => {
         }
     ]
 
-    const appoinmentTypeOptions = [
+    const appointmentTypeOptions = [
         {
             value: "",
             text: ""  
@@ -195,12 +223,12 @@ const UserForm = () => {
                 <Input fieldName="clientEmail" fieldType="text" fieldLabel="Email of Client: " formik={formik} />
 
                 <SelectDropdown 
-                    fieldName="appoinmentType" 
+                    fieldName="appointmentType" 
                     fieldLabel="What type of appointment was it?" 
                     formik={formik} 
-                    options={appoinmentTypeOptions}
+                    options={appointmentTypeOptions}
                 />
-                { formik.values.appoinmentType == "quote" && (
+                { formik.values.appointmentType == "quote" && (
                     <>
                         <Textarea fieldName="reportPublic" fieldLabel="Report (visable by client):  " formik={formik} />
                         <Textarea fieldName="reportPrivate" fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
@@ -212,7 +240,7 @@ const UserForm = () => {
                             options={durationOfInterventionOptions} />
                     </>
                 )}
-                { formik.values.appoinmentType == "sav" && (
+                { formik.values.appointmentType == "sav" && (
                     <>
                         <SelectDropdown 
                             fieldName="wasProblemResolved" 
@@ -227,7 +255,7 @@ const UserForm = () => {
                     </>
                 )}
 
-                { formik.values.appoinmentType == "intervention" && (
+                { formik.values.appointmentType == "intervention" && (
                 <>
                      <SelectDropdown 
                         fieldName="wasClientBilled" 
@@ -241,7 +269,7 @@ const UserForm = () => {
                         options={clientPrescenceOptions} />
                 </>
                 )}
-                { formik.values.appoinmentType == "cancelled" && (
+                { formik.values.appointmentType == "cancelled" && (
                     <>
                         <Textarea fieldName="reasonsForCancellation" fieldLabel="Reasons for cancellation:  " formik={formik} />
                         <Input fieldName="arrivalTimeAtClient"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
