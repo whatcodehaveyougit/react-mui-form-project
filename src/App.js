@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/header/header'
-import Form from './routes/form/form'
+import Form from './routes/interventionForm/interventionForm'
 import FormSubmitted from './routes/form-submitted/form-submitted';
 
 function App() {
