@@ -10,11 +10,11 @@ import SelectDropdown from '../../reuseableComponents/selectDropdown/selectDropd
 
 const validationSchema = Yup.object().shape({
     clientName: Yup.string().min(3, "It's too short").required("Required"),
-    dateOfIntervention: Yup.string().required("Required"),
+    // dateOfIntervention: Yup.string().required("Required"),
     // timeOfIntervention: Yup.string().required("Required"),
-    // nameOfIntervention: Yup.string().required("Required"),
+    nameOfIntervention: Yup.string().required("Required"),
     // clientAddress: Yup.string().required("Required"),
-    // appoinmentType: Yup.string().oneOf(["quote", "sav", "intervention", "cancelled"], "Required").required("Required"),
+    appoinmentType: Yup.string().oneOf(["quote", "sav", "intervention", "cancelled"], "Required").required("Required"),
     wasProblemResolved: Yup.string().oneOf(["yes", "noReason1", "noReason2", "noReason3"], "Required").required("Required"),
     // reportPublic: Yup.string().required("Required"),
     // clientPrescence: Yup.string().oneOf(["clientPresent", "clientNotPresent"], "Required").required("Required"),
@@ -120,24 +120,52 @@ const UserForm = () => {
                     formik={formik} 
                     options={appoinmentTypeOptions}
                 />
+                { formik.values.appoinmentType == "quote" && (
+                    <>
+                        <Textarea fieldName="reportPublic" fieldLabel="Report (visable by client):  " formik={formik} />
+                        <Textarea fieldName="reportPrivate" fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
+                        {/* Arrival time at the clients */}
+                        {/* Duraction of intervention */}
 
+                    </>
+                )}
                 { formik.values.appoinmentType == "sav" && (
+                    <>
+                        <SelectDropdown 
+                            fieldName="wasProblemResolved" 
+                            fieldLabel="Was the problem resolved? " 
+                            formik={formik} 
+                            options={wasProblemResolvedOptions} />
+                        <SelectDropdown 
+                            fieldName="clientPrescence" 
+                            fieldLabel="Was client present? " 
+                            formik={formik} 
+                            options={clientPrescenceOptions} />
+                    </>
+                )}
+
+                { formik.values.appoinmentType == "intervention" && (
                 <>
-                    <SelectDropdown 
+                    {/* Was the client billed */}
+                    {/* <SelectDropdown 
                         fieldName="wasProblemResolved" 
                         fieldLabel="Was the problem resolved? " 
                         formik={formik} 
-                        options={wasProblemResolvedOptions} />
+                        options={wasProblemResolvedOptions} /> */}
                     <SelectDropdown 
                         fieldName="clientPrescence" 
                         fieldLabel="Was client present? " 
                         formik={formik} 
                         options={clientPrescenceOptions} />
                 </>
-            )}
-               <Textarea fieldName="reportPublic" fieldLabel="Report (visable by client):  " formik={formik} />
-               <Textarea fieldName="reportPrivate" fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
-
+                )}
+                { formik.values.appoinmentType == "cancelled" && (
+                    <>
+                        {/* Reason for cancellation textarea */}
+                        {/* Arrival time at the clients */}
+                        {/* Duration of intervention - dropdown */}
+                    </>
+                )}
                 
                 <div className='form-control-wrapper'>
                     <Button
