@@ -27,7 +27,6 @@ const UserForm = () => {
     const navigate = useNavigate();
 
     const onSubmit = (values, submitProps) => {
-        // console.log( "Form Submitted" + JSON.stringify(values) )
         submitProps.setSubmitting(false)
         submitProps.resetForm()
         localStorage.setItem('values', JSON.stringify( values ) );
@@ -52,8 +51,6 @@ const UserForm = () => {
         onSubmit,
         validationSchema
     })
-
-    // console.log( formik.values.wasProblemResolved )
 
     const clientPrescenceOptions = [
         {
@@ -109,9 +106,12 @@ const UserForm = () => {
         <>
             <form onSubmit={formik.handleSubmit}>      
                 <Input fieldName="clientName" fieldType="text" fieldLabel="Name of Client: " formik={formik} />
-                <Input fieldName="dateOfIntervention" fieldType="date" fieldLabel="Date of Intervention: : " formik={formik} />
+                <Input fieldName="dateOfIntervention" fieldType="date" fieldLabel="Date of Intervention: " formik={formik} />
                 <Input fieldName="timeOfIntervention"  fieldType="time" fieldLabel="Time of Intervention: " formik={formik} />
                 <Input fieldName="nameOfIntervention" fieldType="text" fieldLabel="Name of Intervention: " formik={formik} />
+                <Input fieldName="clientAddress" fieldType="text" fieldLabel="Client Address:  " formik={formik} />
+                <Input fieldName="photosOfIntervention" fieldType="file" fieldLabel="Photos of intervention  " formik={formik} />
+
                 <Input fieldName="clientEmail" fieldType="text" fieldLabel="Email of Client: " formik={formik} />
 
                 <SelectDropdown 

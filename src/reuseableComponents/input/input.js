@@ -4,14 +4,16 @@ const Input = ( props ) => {
 
     const { fieldName, fieldLabel, fieldType, formik } = props; 
     
+    console.log( fieldType );
 
     return (
             <div className="form-control-wrapper">
                 <label>{fieldLabel}</label>
                 <input
-                    type="text"
-                    id={fieldName}
                     type={fieldType}
+                    {...(fieldType == "file" && 'multiple' )}
+                    multiple
+                    id={fieldName}
                     name={fieldName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
