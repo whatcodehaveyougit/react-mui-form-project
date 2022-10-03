@@ -2,11 +2,8 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom';
 import './interventionForm.scss'
-import Input from '../../reuseableComponents/input/input'
-import Button from '../../reuseableComponents/button/button'
-import Textarea from '../../reuseableComponents/textarea/textarea'
-import SelectDropdown from '../../reuseableComponents/selectDropdown/selectDropdown'
-
+import Reuseable from '../../reuseableComponents/reusable'
+import { clientPrescenceOptions, wasProblemResolvedOptions, appointmentTypeOptions, durationOfAppointmentOptions, wasClientBilledOptions } from './interventionFormVariables'
 
 const validationSchema = Yup.object().shape({
     clientName: Yup.string().min(3, "It's too short").required("Required"),
@@ -115,132 +112,18 @@ const UserForm = () => {
         validationSchema
     })
 
-    const clientPrescenceOptions = [
-        {
-            value: "",
-            text: ""  
-         },
-        {
-            value: "clientPresent",
-            text: "Client signed"
-        },
-        {
-            value: "clientNotPresent",
-            text: "Nobody was there"
-        }
-    ]
-
-
-    const wasProblemResolvedOptions = [
-        {
-            value: "",
-            text: ""  
-         },
-        {
-           value: "yes",
-           text: "Yes"  
-        },
-        {
-           value: "noReason1",
-           text: "No, need to return"  
-        },
-        {
-            value: "noReason2",
-            text: "No, order material and return"  
-         },
-         {
-           value: "noReason3",
-           text: "No, not sure why"  
-        }
-    ]
-
-    const appointmentTypeOptions = [
-        {
-            value: "",
-            text: ""  
-         },
-        {
-           value: "quote",
-           text: "Quote"  
-        },
-        {
-           value: "sav",
-           text: "SAV"  
-        },
-        {
-            value: "intervention",
-            text: "Intervention"  
-         },
-         {
-           value: "cancelled",
-           text: "Cancelled"  
-        },
-    ]
-
-    const durationOfAppointmentOptions = [
-        {
-            value: "",
-            text: ""  
-        },
-        {
-           value: "0min",
-           text: "0 min"  
-        },
-        {
-           value: "10mins",
-           text: "10 mins"  
-        },
-        {
-            value: "20mins",
-            text: "20 mins"  
-         },
-         {
-           value: "30mins",
-           text: "30 mins"  
-        },
-        {
-            value: "1hour",
-            text: "1 hour"  
-         },
-    ]
-
-    const wasClientBilledOptions = [
-        {
-            value: "",
-            text: ""  
-        },
-        {
-           value: "option1",
-           text: "1 - Intervention Finished"  
-        },
-        {
-           value: "option2",
-           text: "2 - Intervention finished and new estimate todo"  
-        },
-        {
-            value: "option3",
-            text: "3 - Return to finish"  
-         },
-         {
-           value: "option4",
-           text: "4 - Other"  
-        },
-    ]
-
-
     return (
         <>
             <form onSubmit={formik.handleSubmit}>      
-                <Input fieldName="clientName" fieldType="text" fieldLabel="Name of Client: " formik={formik} />
-                <Input fieldName="dateOfIntervention" fieldType="date" fieldLabel="Date of Intervention: " formik={formik} />
-                <Input fieldName="timeOfIntervention"  fieldType="time" fieldLabel="Time of Intervention: " formik={formik} />
-                <Input fieldName="nameOfIntervention" fieldType="text" fieldLabel="Name of Intervention: " formik={formik} />
-                <Input fieldName="clientAddress" fieldType="text" fieldLabel="Client Address:  " formik={formik} />
-                <Input fieldName="photosOfIntervention" fieldType="file" fieldLabel="Photos of intervention  " formik={formik} />
+                <Reuseable.Input fieldName="clientName" fieldType="text" fieldLabel="Name of Client: " formik={formik} />
+                <Reuseable.Input fieldName="dateOfIntervention" fieldType="date" fieldLabel="Date of Intervention: " formik={formik} />
+                <Reuseable.Input fieldName="timeOfIntervention"  fieldType="time" fieldLabel="Time of Intervention: " formik={formik} />
+                <Reuseable.Input fieldName="nameOfIntervention" fieldType="text" fieldLabel="Name of Intervention: " formik={formik} />
+                <Reuseable.Input fieldName="clientAddress" fieldType="text" fieldLabel="Client Address:  " formik={formik} />
+                <Reuseable.Input fieldName="photosOfIntervention" fieldType="file" fieldLabel="Photos of intervention  " formik={formik} />
+                <Reuseable.Input fieldName="clientEmail" fieldType="text" fieldLabel="Email of Client: " formik={formik} />
 
-                <Input fieldName="clientEmail" fieldType="text" fieldLabel="Email of Client: " formik={formik} />
-
-                <SelectDropdown 
+                <Reuseable.SelectDropdown 
                     fieldName="appointmentType" 
                     fieldLabel="What type of appointment was it?" 
                     formik={formik} 
@@ -248,10 +131,10 @@ const UserForm = () => {
                 />
                 { formik.values.appointmentType == "quote" && (
                     <>
-                        <Textarea fieldName="reportPublicQuote" fieldLabel="Report (visable by client):  " formik={formik} />
-                        <Textarea fieldName="reportPrivateQuote" fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
-                        <Input fieldName="arrivalTimeAtClientQuote"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
-                        <SelectDropdown 
+                        <Reuseable.Textarea fieldName="reportPublicQuote" fieldLabel="Report (visable by client):  " formik={formik} />
+                        <Reuseable.Textarea fieldName="reportPrivateQuote" fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
+                        <Reuseable.Input fieldName="arrivalTimeAtClientQuote"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
+                        <Reuseable.SelectDropdown 
                             fieldName="durationOfAppointmentQuote" 
                             fieldLabel="Duration of Appointment? " 
                             formik={formik} 
@@ -260,12 +143,12 @@ const UserForm = () => {
                 )}
                 { formik.values.appointmentType == "sav" && (
                     <>
-                        <SelectDropdown 
+                        <Reuseable.SelectDropdown 
                             fieldName="wasProblemResolvedSav" 
                             fieldLabel="Was the problem resolved? " 
                             formik={formik} 
                             options={wasProblemResolvedOptions} />
-                        <SelectDropdown 
+                        <Reuseable.SelectDropdown 
                             fieldName="clientPrescenceSav" 
                             fieldLabel="Was client present? " 
                             formik={formik} 
@@ -275,12 +158,12 @@ const UserForm = () => {
 
                 { formik.values.appointmentType == "intervention" && (
                 <>
-                     <SelectDropdown 
+                     <Reuseable.SelectDropdown 
                         fieldName="wasClientBilledIntervention" 
                         fieldLabel="Was the client billed? " 
                         formik={formik} 
                         options={wasClientBilledOptions} />
-                    <SelectDropdown 
+                    <Reuseable.SelectDropdown 
                         fieldName="clientPrescenceIntervention" 
                         fieldLabel="Was client present? " 
                         formik={formik} 
@@ -289,9 +172,9 @@ const UserForm = () => {
                 )}
                 { formik.values.appointmentType == "cancelled" && (
                     <>
-                        <Textarea fieldName="reasonsForCancellation" fieldLabel="Reasons for cancellation:  " formik={formik} />
-                        <Input fieldName="arrivalTimeAtClientCancelled"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
-                        <SelectDropdown 
+                        <Reuseable.Textarea fieldName="reasonsForCancellation" fieldLabel="Reasons for cancellation:  " formik={formik} />
+                        <Reuseable.Input fieldName="arrivalTimeAtClientCancelled"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
+                        <Reuseable.SelectDropdown 
                             fieldName="durationOfInterventionCancelled" 
                             fieldLabel="Duration of Intervention? " 
                             formik={formik} 
@@ -300,11 +183,11 @@ const UserForm = () => {
                 )}
                 
                 <div className='form-control-wrapper'>
-                    <Button
+                    <Reuseable.Button
                         type="submit"
                         classes="btn primary-bg"
                         text="Submit Form"
-                    ></Button>
+                    ></Reuseable.Button>
                 </div> 
 
             </form>
