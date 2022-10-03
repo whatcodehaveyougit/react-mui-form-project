@@ -120,7 +120,7 @@ const UserForm = () => {
                 <Reuseable.Input fieldName="timeOfIntervention"  fieldType="time" fieldLabel="Time of Intervention: " formik={formik} />
                 <Reuseable.Input fieldName="nameOfIntervention" fieldType="text" fieldLabel="Name of Intervention: " formik={formik} />
                 <Reuseable.Input fieldName="clientAddress" fieldType="text" fieldLabel="Client Address:  " formik={formik} />
-                <Reuseable.Input fieldName="photosOfIntervention" fieldType="file" fieldLabel="Photos of intervention  " formik={formik} />
+                <Reuseable.InputFile fieldName="photosOfIntervention" fieldType="file" fieldLabel="Photos of intervention  " formik={formik} />
                 <Reuseable.Input fieldName="clientEmail" fieldType="text" fieldLabel="Email of Client: " formik={formik} />
 
                 <Reuseable.SelectDropdown 

@@ -1,11 +1,8 @@
-
+import './selectDropdown.scss'
 
 const SelectDropdown = ( props ) => {
 
     const { fieldName, fieldLabel, formik, options } = props; 
-    
-    // console.log( formik.errors );
-    // console.log( formik.touched );
     
     return (
         <div className="form-control-wrapper">

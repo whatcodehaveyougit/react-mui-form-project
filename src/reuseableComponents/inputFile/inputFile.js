@@ -1,6 +1,6 @@
-import './input.scss'
+import './inputFile.scss'
 
-const Input = ( props ) => {
+const InputFile = ( props ) => {
 
     const { fieldName, fieldLabel, fieldType, formik } = props; 
         
@@ -9,9 +9,8 @@ const Input = ( props ) => {
                 <label>{fieldLabel}</label>
                 <input
                     type={fieldType}
-                    // {fieldType == "file" && 'multiple' }
-                    // Sigurd this needs to be fixed
-                    // multiple
+                    className="input-file"
+                    multiple
                     id={fieldName}
                     name={fieldName}
                     onChange={formik.handleChange}
@@ -24,4 +23,4 @@ const Input = ( props ) => {
             </div>
     )
 }
-export default Input;
+export default InputFile;

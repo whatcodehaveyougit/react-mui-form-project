@@ -1,14 +1,14 @@
-.input-text {
-    padding: 0.5% 2%;
-    border: 1px solid grey;
-    border-radius: 5px;
-}
-
 .form-control-wrapper {
-    padding: 1% 0;
+    padding: 3% 0;
+    label {
+        width: 100%;
+        display: block;
+    }
+    .error {
+        background-color: red;
+        color: white;
+    }
 }
 
-.error {
-    background-color: red;
-    color: white;
-}
+
+
