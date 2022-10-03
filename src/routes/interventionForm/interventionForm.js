@@ -10,56 +10,70 @@ import SelectDropdown from '../../reuseableComponents/selectDropdown/selectDropd
 
 const validationSchema = Yup.object().shape({
     clientName: Yup.string().min(3, "It's too short").required("Required"),
-    // dateOfIntervention: Yup.string().required("Required"),
-    // timeOfIntervention: Yup.string().required("Required"),
-    // nameOfIntervention: Yup.string().required("Required"),
-    // clientAddress: Yup.string().required("Required"),
-    // clientEmail: Yup.string().email("Enter valid email"),
+    dateOfIntervention: Yup.string().required("Required"),
+    timeOfIntervention: Yup.string().required("Required"),
+    nameOfIntervention: Yup.string().required("Required"),
+    clientAddress: Yup.string().required("Required"),
+    clientEmail: Yup.string().email("Enter valid email"),
     appointmentType: Yup.string().oneOf(["quote", "sav", "intervention", "cancelled"], "Required").required("Required"),
     
     // Optional part of form - Quote 
-    reportPublic: Yup.string().when('appointmentType', {
+    reportPublicQuote: Yup.string().when('appointmentType', {
         is: "quote",
         then: Yup.string().required('Required'),
     }),
-    arrivalTimeAtClient: Yup.string().when('appointmentType', {
-        is: "quote" || "cancelled",
+    arrivalTimeAtClientQuote: Yup.string().when('appointmentType', {
+        is: "quote",
         then: Yup.string().required('Required'),
     }),
-    durationOfIntervention: Yup.string().when('appointmentType', {
-        is: "quote" || "cancelled",
+    durationOfAppointmentQuote: Yup.string().when('appointmentType', {
+        is: "quote",
         then: Yup.string().required('Required'),
     }),
 
     // Optional part of form - SAV 
-    wasProblemResolved: Yup.string().when('appointmentType', {
+    wasProblemResolvedSav: Yup.string().when('appointmentType', {
         is: "sav",
         then: Yup.string().oneOf(["yes", "noReason1", "noReason2", "noReason3"], "Required").required("Required")
         .required('Required'),
     }),
-    clientPrescence: Yup.string().when('appointmentType', {
-        is: "sav" || "intervention",
+    clientPrescenceSav: Yup.string().when('appointmentType', {
+        is: "sav",
         then: Yup.string().oneOf(["clientPresent", "clientNotPresent"], "Required").required("Required")
         .required('Required'),
     }),
     
     // Optional part of form - Intervention     
-    wasClientBilled: Yup.string().when('appointmentType', {
+    wasClientBilledIntervention: Yup.string().when('appointmentType', {
         is: "intervention",
         then: Yup.string().oneOf(["option1", "option2", "option3", "option4"], "Required").required("Required")
         .required('Required'),
     }),
-    clientPrescence: Yup.string().when('appointmentType', {
+    clientPrescenceIntervention: Yup.string().when('appointmentType', {
         is: "intervention",
         then: Yup.string().oneOf(["clientPresent", "clientNotPresent"], "Required").required("Required")
         .required('Required'),
     }),
+    clientPrescenceIntervention: Yup.string().when('appointmentType', {
+        is: "intervention",
+        then: Yup.string().oneOf(["clientPresent", "clientNotPresent"], "Required").required("Required")
+        .required('Required'),
+    }),
+    
     
     // Optional part of form - RDV cancelled
     reasonsForCancellation: Yup.string().when('appointmentType', {
         is: "cancelled",
         then: Yup.string().required("Required")
         .required('Required'),
+    }),
+    arrivalTimeAtClientCancelled: Yup.string().when('appointmentType', {
+        is: "cancelled",
+        then: Yup.string().required('Required'),
+    }),
+    durationOfInterventionCancelled: Yup.string().when('appointmentType', {
+        is: "cancelled",
+        then: Yup.string().required('Required'),
     }),
 })
 
@@ -85,13 +99,17 @@ const UserForm = () => {
             photosOfIntervention: [],
             clientEmail: '',
             appointmentType: '',
-            wasProblemResolved: '',
-            reportPublic: '',
-            reportPrivate: '',
-            arrivalTimeAtClient: '',
-            durationOfIntervention: '',
-            clientPrescence: '',
-            reasonsForCancellation: ''
+            reportPublicQuote: '',
+            reportPrivateQuote: '',
+            arrivalTimeAtClientQuote: '',
+            durationOfAppointmentQuote: '',
+            wasProblemResolvedSav: '',
+            clientPrescenceSav: '',
+            clientPrescenceIntervention: '',
+            wasClientBilledIntervention: '',
+            reasonsForCancellation: '',
+            arrivalTimeAtClientCancelled: '',
+            durationOfInterventionCancelled: ''
         },
         onSubmit,
         validationSchema
@@ -159,7 +177,7 @@ const UserForm = () => {
         },
     ]
 
-    const durationOfInterventionOptions = [
+    const durationOfAppointmentOptions = [
         {
             value: "",
             text: ""  
@@ -230,25 +248,25 @@ const UserForm = () => {
                 />
                 { formik.values.appointmentType == "quote" && (
                     <>
-                        <Textarea fieldName="reportPublic" fieldLabel="Report (visable by client):  " formik={formik} />
-                        <Textarea fieldName="reportPrivate" fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
-                        <Input fieldName="arrivalTimeAtClient"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
+                        <Textarea fieldName="reportPublicQuote" fieldLabel="Report (visable by client):  " formik={formik} />
+                        <Textarea fieldName="reportPrivateQuote" fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
+                        <Input fieldName="arrivalTimeAtClientQuote"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
                         <SelectDropdown 
-                            fieldName="durationOfIntervention" 
-                            fieldLabel="Duration of Intervention? " 
+                            fieldName="durationOfAppointmentQuote" 
+                            fieldLabel="Duration of Appointment? " 
                             formik={formik} 
-                            options={durationOfInterventionOptions} />
+                            options={durationOfAppointmentOptions} />
                     </>
                 )}
                 { formik.values.appointmentType == "sav" && (
                     <>
                         <SelectDropdown 
-                            fieldName="wasProblemResolved" 
+                            fieldName="wasProblemResolvedSav" 
                             fieldLabel="Was the problem resolved? " 
                             formik={formik} 
                             options={wasProblemResolvedOptions} />
                         <SelectDropdown 
-                            fieldName="clientPrescence" 
+                            fieldName="clientPrescenceSav" 
                             fieldLabel="Was client present? " 
                             formik={formik} 
                             options={clientPrescenceOptions} />
@@ -258,12 +276,12 @@ const UserForm = () => {
                 { formik.values.appointmentType == "intervention" && (
                 <>
                      <SelectDropdown 
-                        fieldName="wasClientBilled" 
+                        fieldName="wasClientBilledIntervention" 
                         fieldLabel="Was the client billed? " 
                         formik={formik} 
                         options={wasClientBilledOptions} />
                     <SelectDropdown 
-                        fieldName="clientPrescence" 
+                        fieldName="clientPrescenceIntervention" 
                         fieldLabel="Was client present? " 
                         formik={formik} 
                         options={clientPrescenceOptions} />
@@ -272,12 +290,12 @@ const UserForm = () => {
                 { formik.values.appointmentType == "cancelled" && (
                     <>
                         <Textarea fieldName="reasonsForCancellation" fieldLabel="Reasons for cancellation:  " formik={formik} />
-                        <Input fieldName="arrivalTimeAtClient"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
+                        <Input fieldName="arrivalTimeAtClientCancelled"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
                         <SelectDropdown 
-                            fieldName="durationOfIntervention" 
+                            fieldName="durationOfInterventionCancelled" 
                             fieldLabel="Duration of Intervention? " 
                             formik={formik} 
-                            options={durationOfInterventionOptions} />
+                            options={durationOfAppointmentOptions} />
                     </>
                 )}
                 
