@@ -1,10 +1,11 @@
+@import "../../colors";
+
 .form-control-wrapper {
     width: 90%;
     .required-flag {
-        color: #F5222D;
+        color: $self_city_red;
     }
 }
-
 
 
 label {
@@ -35,7 +36,7 @@ textarea {
 }
 
 .error-message {
-    color: #F5222D;
+    color: $self_city_red;
     display: inline-block;
     margin: 5px 0 0;
 }
@@ -43,7 +44,7 @@ textarea {
 /* Error Styling */
 
 .error label {
-    color: #F5222D;
+    color: $self_city_red;
 }
 
 @keyframes rollout {
@@ -61,7 +62,7 @@ textarea {
 
 .error input, .error select, .error textarea {
     background-color: #fce4e4;
-    border: 1px solid #F5222D;
+    border: 1px solid $self_city_red;
     outline: none;
 }
 
