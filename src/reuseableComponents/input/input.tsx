@@ -16,7 +16,7 @@ type InputProps = {
 
 const Input = ( props: InputProps ) => {
 
-    const { fieldName, fieldLabel, fieldType, formik } = props; 
+    const { fieldName, fieldLabel, fieldType = "text", formik } = props; 
     
     let isThereAnError = false;
     if ( formik.touched[fieldName] && formik.errors[fieldName] ) {
