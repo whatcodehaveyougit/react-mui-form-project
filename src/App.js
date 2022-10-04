@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/header/header'
-import Form from './routes/interventionForm/interventionForm'
+import Form from './routes/interventionForm/interventionForm.tsx'
 import FormSubmitted from './routes/form-submitted/form-submitted.tsx';
 
 function App() {

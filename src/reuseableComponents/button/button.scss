@@ -3,7 +3,7 @@
     height: 30px;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
     font-weight: 700;
     height: 34px;  
   }
@@ -11,3 +11,7 @@
   .btn:hover {
     cursor: pointer;
   }
+
+  .btn:hover {
+  background-image: linear-gradient(rgb(0 0 0/5%) 0 0);
+}

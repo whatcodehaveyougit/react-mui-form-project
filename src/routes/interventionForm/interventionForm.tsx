@@ -1,3 +1,4 @@
+import React from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom';
@@ -44,11 +45,6 @@ const validationSchema = Yup.object().shape({
     wasClientBilledIntervention: Yup.string().when('appointmentType', {
         is: "intervention",
         then: Yup.string().oneOf(["option1", "option2", "option3", "option4"], "Required").required("Required")
-        .required('Required'),
-    }),
-    clientPrescenceIntervention: Yup.string().when('appointmentType', {
-        is: "intervention",
-        then: Yup.string().oneOf(["clientPresent", "clientNotPresent"], "Required").required("Required")
         .required('Required'),
     }),
     clientPrescenceIntervention: Yup.string().when('appointmentType', {

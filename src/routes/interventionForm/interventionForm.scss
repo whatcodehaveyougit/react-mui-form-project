@@ -9,6 +9,7 @@ label {
     margin-bottom: 2px;
     font-size: 18px;
     line-height: 150%;
+    font-weight: 600;
 }
   
 input, select, textarea {
@@ -26,6 +27,10 @@ input, select, textarea {
     max-width: 100%;
 }
 
+textarea {
+    height: 100px;
+}
+
 .error-message {
     color: #F5222D;
     display: inline-block;
@@ -37,6 +42,19 @@ input, select, textarea {
 .error label {
     color: #F5222D;
 }
+
+@keyframes rollout {
+    0% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  .error-message {
+    animation: .4s rollout;
+  }
 
 .error input, .error select, .error textarea {
     background-color: #fce4e4;
