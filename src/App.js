@@ -2,7 +2,7 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/header/header'
 import Form from './routes/interventionForm/interventionForm'
-import FormSubmitted from './routes/form-submitted/form-submitted';
+import FormSubmitted from './routes/form-submitted/form-submitted.tsx';
 
 function App() {
   return (

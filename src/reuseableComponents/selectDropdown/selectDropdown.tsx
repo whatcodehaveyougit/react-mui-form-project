@@ -1,6 +1,19 @@
 import './selectDropdown.scss'
 
-const SelectDropdown = ( props ) => {
+type SelectProps = {
+    fieldLabel: string,
+    fieldName: string,
+    fieldType: string,
+    formik: {
+        touched: Object
+        errors: Object
+        handleChange: Object,
+        handleBlur: Object,
+        values: Object
+    }
+}
+
+const SelectDropdown = ( props: SelectProps ) => {
 
     const { fieldName, fieldLabel, formik, options } = props; 
     

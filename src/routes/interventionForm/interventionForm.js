@@ -2,8 +2,8 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom';
 import './interventionForm.scss'
-import Reuseable from '../../reuseableComponents/reusable'
-import { clientPrescenceOptions, wasProblemResolvedOptions, appointmentTypeOptions, durationOfAppointmentOptions, wasClientBilledOptions } from './interventionFormVariables'
+import Reuseable from '../../reuseableComponents/reusable.tsx'
+import { clientPrescenceOptions, wasProblemResolvedOptions, appointmentTypeOptions, durationOfAppointmentOptions, wasClientBilledOptions } from './interventionFormVariables.tsx'
 
 const validationSchema = Yup.object().shape({
     clientName: Yup.string().min(3, "It's too short").required("Required"),

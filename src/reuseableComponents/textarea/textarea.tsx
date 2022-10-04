@@ -1,6 +1,19 @@
+import React from 'react'
 import './textarea.scss'
 
-const Textarea = (props) => {
+type TextareaProps = {
+    fieldLabel: string,
+    fieldName: string,
+    formik: {
+        touched: Object
+        errors: Object
+        handleChange: Object,
+        handleBlur: Object,
+        values: Object
+    }
+}
+
+const Textarea = (props: TextareaProps) => {
 
     const { fieldName, fieldLabel, formik } = props; 
 
@@ -13,12 +26,11 @@ const Textarea = (props) => {
             <div className={"form-control-wrapper " + (isThereAnError ? 'error' : '')}>
                 <label>{fieldLabel}</label>
                 <textarea
-                    type="text"
                     id={fieldName}
                     name={fieldName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    values={formik.values.fieldName}
+                    values={formik.values[fieldName]}
                 ></textarea>  
                 { isThereAnError 
                 ? <div className='error-message'>{formik.errors[fieldName]}</div> 

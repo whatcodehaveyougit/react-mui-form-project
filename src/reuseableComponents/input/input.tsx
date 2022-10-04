@@ -1,6 +1,20 @@
+import React from 'react'
 import './input.scss'
 
-const Input = ( props ) => {
+type InputProps = {
+    fieldLabel: string,
+    fieldName: string,
+    fieldType: string,
+    formik: {
+        touched: Object
+        errors: Object
+        handleChange: Object,
+        handleBlur: Object,
+        values: Object
+    }
+}
+
+const Input = ( props: InputProps ) => {
 
     const { fieldName, fieldLabel, fieldType, formik } = props; 
     
@@ -18,7 +32,7 @@ const Input = ( props ) => {
                     name={fieldName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    values={formik.values.fieldName}
+                    values={formik.values[fieldName]}
                 ></input>  
                 { isThereAnError
                 ? <div className='error-message'>{formik.errors[fieldName]}</div> 

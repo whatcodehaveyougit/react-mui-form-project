@@ -1,6 +1,20 @@
+import React from 'react'
 import './inputFile.scss'
 
-const InputFile = ( props ) => {
+type InputFileProps = {
+    fieldLabel: string,
+    fieldName: string,
+    fieldType: string,
+    formik: {
+        touched: Object
+        errors: Object
+        handleChange: Object,
+        handleBlur: Object,
+        values: Object
+    }
+}
+
+const InputFile = ( props: InputFileProps ) => {
 
     const { fieldName, fieldLabel, fieldType, formik } = props; 
     

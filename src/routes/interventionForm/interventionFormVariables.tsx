@@ -1,4 +1,9 @@
-export const clientPrescenceOptions = [
+type OptionItem = {
+   value: String, 
+   text: String
+}
+
+export const clientPrescenceOptions: Array<OptionItem> = [
     {
         value: "",
         text: ""  
@@ -13,7 +18,7 @@ export const clientPrescenceOptions = [
     }
 ]
 
-export const wasProblemResolvedOptions = [
+export const wasProblemResolvedOptions: Array<OptionItem> = [
     {
         value: "",
         text: ""  
@@ -36,7 +41,7 @@ export const wasProblemResolvedOptions = [
     }
 ]
 
-export const appointmentTypeOptions = [
+export const appointmentTypeOptions: Array<OptionItem> = [
     {
         value: "",
         text: ""  
@@ -59,7 +64,7 @@ export const appointmentTypeOptions = [
     },
 ]
 
-export const durationOfAppointmentOptions = [
+export const durationOfAppointmentOptions: Array<OptionItem> = [
     {
         value: "",
         text: ""  
@@ -86,7 +91,7 @@ export const durationOfAppointmentOptions = [
      },
 ]
 
-export const wasClientBilledOptions = [
+export const wasClientBilledOptions: Array<OptionItem> = [
     {
         value: "",
         text: ""  
