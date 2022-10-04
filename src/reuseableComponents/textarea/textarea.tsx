@@ -4,6 +4,7 @@ import './textarea.scss'
 type TextareaProps = {
     fieldLabel: string,
     fieldName: string,
+    required: boolean,
     formik: {
         touched: Object
         errors: Object
@@ -15,7 +16,7 @@ type TextareaProps = {
 
 const Textarea = (props: TextareaProps) => {
 
-    const { fieldName, fieldLabel, formik } = props; 
+    const { fieldName, fieldLabel, required=true, formik } = props; 
 
     let isThereAnError = false;
     if ( formik.touched[fieldName] && formik.errors[fieldName] ) {
@@ -24,7 +25,7 @@ const Textarea = (props: TextareaProps) => {
 
     return (
             <div className={"form-control-wrapper " + (isThereAnError ? 'error' : '')}>
-                <label>{fieldLabel}</label>
+                <label>{fieldLabel}{ required && <span className='required-flag'>*</span>}</label>
                 <textarea
                     id={fieldName}
                     name={fieldName}

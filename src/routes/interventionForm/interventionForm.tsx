@@ -118,18 +118,18 @@ const UserForm = () => {
                 <Reuseable.Input fieldName="nameOfIntervention" fieldLabel="Name of Intervention: " formik={formik} />
                 <Reuseable.Input fieldName="clientAddress" fieldLabel="Client Address:  " formik={formik} />
                 <Reuseable.InputFile fieldName="photosOfIntervention" fieldType="file" fieldLabel="Photos of intervention  " formik={formik} />
-                <Reuseable.Input fieldName="clientEmail" fieldLabel="Email of Client: " formik={formik} />
+                <Reuseable.Input fieldName="clientEmail" fieldLabel="Email of Client: " required={false} formik={formik} />
 
                 <Reuseable.SelectDropdown 
                     fieldName="appointmentType" 
-                    fieldLabel="What type of appointment was it?" 
+                    fieldLabel="What type of appointment was it? " 
                     formik={formik} 
                     options={appointmentTypeOptions}
                 />
                 { formik.values.appointmentType == "quote" && (
                     <>
                         <Reuseable.Textarea fieldName="reportPublicQuote" fieldLabel="Report (visable by client):  " formik={formik} />
-                        <Reuseable.Textarea fieldName="reportPrivateQuote" fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
+                        <Reuseable.Textarea fieldName="reportPrivateQuote" required={false} fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
                         <Reuseable.Input fieldName="arrivalTimeAtClientQuote"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
                         <Reuseable.SelectDropdown 
                             fieldName="durationOfAppointmentQuote" 
@@ -184,6 +184,7 @@ const UserForm = () => {
                         type="submit"
                         classes="btn primary-bg"
                         text="Submit Form"
+                        formik={formik}
                     ></Reuseable.Button>
                 </div> 
 

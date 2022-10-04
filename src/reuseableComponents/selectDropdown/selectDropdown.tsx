@@ -1,9 +1,13 @@
 import './selectDropdown.scss'
+import React from 'react'
+import { OptionItem } from '../../types/types'
 
 type SelectProps = {
     fieldLabel: string,
     fieldName: string,
     fieldType: string,
+    required: boolean,
+    options: Array<OptionItem>
     formik: {
         touched: Object
         errors: Object
@@ -15,7 +19,7 @@ type SelectProps = {
 
 const SelectDropdown = ( props: SelectProps ) => {
 
-    const { fieldName, fieldLabel, formik, options } = props; 
+    const { fieldName, fieldLabel, formik, required=true, options } = props; 
     
     let isThereAnError = false;
     if ( formik.touched[fieldName] && formik.errors[fieldName] ) {
@@ -24,15 +28,15 @@ const SelectDropdown = ( props: SelectProps ) => {
     
     return (
         <div className={"form-control-wrapper " + (isThereAnError ? 'error' : '')}>
-            <label>{fieldLabel}</label>
+            <label>{fieldLabel}{ required && <span className='required-flag'>*</span>}</label>
             <select 
                 id={fieldName}
                 name={fieldName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.fieldName}
+                value={formik.values[fieldName]}
                 >
-                { options.map((option) => (
+                { options.map((option: OptionItem) => (
                     <option key={option.value} value={option.value }>{option.text}</option>
                 ))
                 }

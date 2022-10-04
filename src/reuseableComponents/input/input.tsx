@@ -5,6 +5,7 @@ type InputProps = {
     fieldLabel: string,
     fieldName: string,
     fieldType: string,
+    required: boolean,
     formik: {
         touched: Object
         errors: Object
@@ -16,7 +17,7 @@ type InputProps = {
 
 const Input = ( props: InputProps ) => {
 
-    const { fieldName, fieldLabel, fieldType = "text", formik } = props; 
+    const { fieldName, fieldLabel, fieldType = "text", required=true, formik } = props; 
     
     let isThereAnError = false;
     if ( formik.touched[fieldName] && formik.errors[fieldName] ) {
@@ -25,7 +26,7 @@ const Input = ( props: InputProps ) => {
 
     return (
         <div className={"form-control-wrapper " + (isThereAnError ? 'error' : '')}>
-                <label>{fieldLabel}</label>
+                <label>{fieldLabel}{ required && <span className='required-flag'>*</span>}</label>
                 <input
                     type={fieldType}
                     id={fieldName}

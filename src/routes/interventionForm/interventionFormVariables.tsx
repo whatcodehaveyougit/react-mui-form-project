@@ -1,7 +1,4 @@
-type OptionItem = {
-   value: String, 
-   text: String
-}
+import { OptionItem } from '../../types/types'
 
 export const clientPrescenceOptions: Array<OptionItem> = [
     {

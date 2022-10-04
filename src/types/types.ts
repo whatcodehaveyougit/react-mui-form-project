@@ -24,3 +24,8 @@ export const SubmitPropsType = {
     setSubmitting: function(): void{},
     resetForm: function(): void{}
 }
+
+export type OptionItem = {
+    value: string, 
+    text: string
+ }
