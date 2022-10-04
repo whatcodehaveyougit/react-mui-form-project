@@ -1,10 +1,16 @@
+import './textarea.scss'
 
 const Textarea = (props) => {
 
     const { fieldName, fieldLabel, formik } = props; 
 
+    let isThereAnError = false;
+    if ( formik.touched[fieldName] && formik.errors[fieldName] ) {
+        isThereAnError = true;
+    }
+
     return (
-            <div className="form-control-wrapper">
+            <div className={"form-control-wrapper " + (isThereAnError ? 'error' : '')}>
                 <label>{fieldLabel}</label>
                 <textarea
                     type="text"
@@ -14,8 +20,8 @@ const Textarea = (props) => {
                     onBlur={formik.handleBlur}
                     values={formik.values.fieldName}
                 ></textarea>  
-                { formik.touched[fieldName] && formik.errors[fieldName] 
-                ? <div className='error'>{formik.errors[fieldName]}</div> 
+                { isThereAnError 
+                ? <div className='error-message'>{formik.errors[fieldName]}</div> 
                 : null}    
             </div>
     )

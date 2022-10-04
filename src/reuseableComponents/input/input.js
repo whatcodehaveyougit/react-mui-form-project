@@ -3,23 +3,25 @@ import './input.scss'
 const Input = ( props ) => {
 
     const { fieldName, fieldLabel, fieldType, formik } = props; 
-        
+    
+    let isThereAnError = false;
+    if ( formik.touched[fieldName] && formik.errors[fieldName] ) {
+        isThereAnError = true;
+    }
+
     return (
-            <div className="form-control-wrapper">
+        <div className={"form-control-wrapper " + (isThereAnError ? 'error' : '')}>
                 <label>{fieldLabel}</label>
                 <input
                     type={fieldType}
-                    // {fieldType == "file" && 'multiple' }
-                    // Sigurd this needs to be fixed
-                    // multiple
                     id={fieldName}
                     name={fieldName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     values={formik.values.fieldName}
                 ></input>  
-                { formik.touched[fieldName] && formik.errors[fieldName] 
-                ? <div className='error'>{formik.errors[fieldName]}</div> 
+                { isThereAnError
+                ? <div className='error-message'>{formik.errors[fieldName]}</div> 
                 : null}    
             </div>
     )

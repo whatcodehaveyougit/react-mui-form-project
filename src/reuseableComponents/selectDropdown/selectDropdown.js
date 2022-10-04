@@ -4,8 +4,13 @@ const SelectDropdown = ( props ) => {
 
     const { fieldName, fieldLabel, formik, options } = props; 
     
+    let isThereAnError = false;
+    if ( formik.touched[fieldName] && formik.errors[fieldName] ) {
+        isThereAnError = true;
+    }
+    
     return (
-        <div className="form-control-wrapper">
+        <div className={"form-control-wrapper " + (isThereAnError ? 'error' : '')}>
             <label>{fieldLabel}</label>
             <select 
                 id={fieldName}
@@ -19,8 +24,8 @@ const SelectDropdown = ( props ) => {
                 ))
                 }
             </select>
-            { formik.touched[fieldName] && formik.errors[fieldName] 
-                ? <div className='error'>{formik.errors[fieldName]}</div> 
+            { isThereAnError
+                ? <div className='error-message'>{formik.errors[fieldName]}</div> 
                 : null}     
         </div>
     )
