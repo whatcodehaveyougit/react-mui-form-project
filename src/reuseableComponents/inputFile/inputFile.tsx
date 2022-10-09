@@ -1,8 +1,23 @@
+import React from 'react'
 import './inputFile.scss'
 
-const InputFile = ( props ) => {
+type InputFileProps = {
+    fieldLabel: string,
+    fieldName: string,
+    fieldType: string,
+    required: boolean,
+    formik: {
+        touched: Object
+        errors: Object
+        handleChange: Object,
+        handleBlur: Object,
+        values: Object
+    }
+}
 
-    const { fieldName, fieldLabel, fieldType, formik } = props; 
+const InputFile = ( props: InputFileProps ) => {
+
+    const { fieldName, fieldLabel, fieldType, required, formik } = props; 
     
     let isThereAnError = false;
     if ( formik.touched[fieldName] && formik.errors[fieldName] ) {
@@ -11,7 +26,7 @@ const InputFile = ( props ) => {
     
     return (
         <div className={"form-control-wrapper " + (isThereAnError ? 'error' : '')}>
-            <label>{fieldLabel}</label>
+            <label>{fieldLabel}{ required && <span className='required-flag'>*</span>}</label>
             <input
                 type={fieldType}
                 className="input-file"
@@ -20,7 +35,7 @@ const InputFile = ( props ) => {
                 name={fieldName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                values={formik.values.fieldName}
+                values={formik.values[fieldName]}
             ></input>  
             { isThereAnError
             ? <div className='error-message'>{formik.errors[fieldName]}</div> 

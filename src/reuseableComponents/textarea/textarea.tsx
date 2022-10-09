@@ -1,8 +1,22 @@
+import React from 'react'
 import './textarea.scss'
 
-const Textarea = (props) => {
+type TextareaProps = {
+    fieldLabel: string,
+    fieldName: string,
+    required: boolean,
+    formik: {
+        touched: Object
+        errors: Object
+        handleChange: Object,
+        handleBlur: Object,
+        values: Object
+    }
+}
 
-    const { fieldName, fieldLabel, formik } = props; 
+const Textarea = (props: TextareaProps) => {
+
+    const { fieldName, fieldLabel, required=true, formik } = props; 
 
     let isThereAnError = false;
     if ( formik.touched[fieldName] && formik.errors[fieldName] ) {
@@ -11,14 +25,13 @@ const Textarea = (props) => {
 
     return (
             <div className={"form-control-wrapper " + (isThereAnError ? 'error' : '')}>
-                <label>{fieldLabel}</label>
+                <label>{fieldLabel}{ required && <span className='required-flag'>*</span>}</label>
                 <textarea
-                    type="text"
                     id={fieldName}
                     name={fieldName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    values={formik.values.fieldName}
+                    values={formik.values[fieldName]}
                 ></textarea>  
                 { isThereAnError 
                 ? <div className='error-message'>{formik.errors[fieldName]}</div> 

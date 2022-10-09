@@ -1,6 +1,13 @@
 import './button.scss'
 
-const Button = ( props ) => {
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    classes: string, 
+    text: string
+}
+
+
+const Button = ( props: ButtonProps ) => {
 
     const { type, classes, text } = props
 

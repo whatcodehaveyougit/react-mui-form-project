@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import "colors";
 
 .App {
-  font-family: 'Red Hat Display',Helvetica,Arial,Lucida,sans-serif;
+  font-family: 'Red Hat Display',Helvetica,Arial,Lucida,sans-serif !important;
 }
 
 .container {
@@ -14,19 +15,19 @@
 }
 
 .primary {
-  color: #69B28F;
+  color: $primary;
 }
 
 .primary-bg {
-  background-color: #69B28F;
+  background-color: $primary;
 }
 
 .secondary {
-  color: #6174AD;
+  color: $secondary;
 }
 
 .secondary-bg {
-  background-color: #6174AD;
+  background-color: $secondary;
 }
 
 html {

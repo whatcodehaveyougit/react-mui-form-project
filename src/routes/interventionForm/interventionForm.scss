@@ -1,7 +1,11 @@
+@import "../../colors";
+
 .form-control-wrapper {
     width: 90%;
+    .required-flag {
+        color: $self_city_red;
+    }
 }
-
 
 
 label {
@@ -9,6 +13,7 @@ label {
     margin-bottom: 2px;
     font-size: 18px;
     line-height: 150%;
+    font-weight: 600;
 }
   
 input, select, textarea {
@@ -24,10 +29,15 @@ input, select, textarea {
     line-height: 150%;
     min-width: 100%;
     max-width: 100%;
+    font-family: 'Red Hat Display',Helvetica,Arial,Lucida,sans-serif !important;
+}
+
+textarea {
+    height: 100px;
 }
 
 .error-message {
-    color: #F5222D;
+    color: $self_city_red;
     display: inline-block;
     margin: 5px 0 0;
 }
@@ -35,12 +45,25 @@ input, select, textarea {
 /* Error Styling */
 
 .error label {
-    color: #F5222D;
+    color: $self_city_red;
 }
+
+@keyframes rollout {
+    0% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  .error-message {
+    animation: .4s rollout;
+  }
 
 .error input, .error select, .error textarea {
     background-color: #fce4e4;
-    border: 1px solid #F5222D;
+    border: 1px solid $self_city_red;
     outline: none;
 }
 

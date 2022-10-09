@@ -1,9 +1,11 @@
+import React from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom';
 import './interventionForm.scss'
-import Reuseable from '../../reuseableComponents/reusable'
-import { clientPrescenceOptions, wasProblemResolvedOptions, appointmentTypeOptions, durationOfAppointmentOptions, wasClientBilledOptions } from './interventionFormVariables'
+import Reuseable from '../../reuseableComponents/reusable.tsx'
+import { clientPrescenceOptions, wasProblemResolvedOptions, appointmentTypeOptions, durationOfAppointmentOptions, wasClientBilledOptions } from './interventionFormVariables.tsx'
+import { initialValuesType, SubmitPropsType } from '../../types/types.ts'
 
 const validationSchema = Yup.object().shape({
     clientName: Yup.string().min(3, "It's too short").required("Required"),
@@ -51,15 +53,10 @@ const validationSchema = Yup.object().shape({
         then: Yup.string().oneOf(["clientPresent", "clientNotPresent"], "Required").required("Required")
         .required('Required'),
     }),
-    clientPrescenceIntervention: Yup.string().when('appointmentType', {
-        is: "intervention",
-        then: Yup.string().oneOf(["clientPresent", "clientNotPresent"], "Required").required("Required")
-        .required('Required'),
-    }),
     
     
     // Optional part of form - RDV cancelled
-    reasonsForCancellation: Yup.string().when('appointmentType', {
+    reasonsForCancellationCancelled: Yup.string().when('appointmentType', {
         is: "cancelled",
         then: Yup.string().required("Required")
         .required('Required'),
@@ -79,7 +76,7 @@ const UserForm = () => {
 
     const navigate = useNavigate();
 
-    const onSubmit = (values, submitProps) => {
+    const onSubmit = (values: initialValuesType, submitProps: SubmitPropsType ) => {        
         submitProps.setSubmitting(false)
         submitProps.resetForm()
         localStorage.setItem('values', JSON.stringify( values ) );
@@ -104,7 +101,7 @@ const UserForm = () => {
             clientPrescenceSav: '',
             clientPrescenceIntervention: '',
             wasClientBilledIntervention: '',
-            reasonsForCancellation: '',
+            reasonsForCancellationCancelled: '',
             arrivalTimeAtClientCancelled: '',
             durationOfInterventionCancelled: ''
         },
@@ -115,24 +112,24 @@ const UserForm = () => {
     return (
         <>
             <form onSubmit={formik.handleSubmit}>      
-                <Reuseable.Input fieldName="clientName" fieldType="text" fieldLabel="Name of Client: " formik={formik} />
+                <Reuseable.Input fieldName="clientName" fieldLabel="Name of Client: " formik={formik} />
                 <Reuseable.Input fieldName="dateOfIntervention" fieldType="date" fieldLabel="Date of Intervention: " formik={formik} />
                 <Reuseable.Input fieldName="timeOfIntervention"  fieldType="time" fieldLabel="Time of Intervention: " formik={formik} />
-                <Reuseable.Input fieldName="nameOfIntervention" fieldType="text" fieldLabel="Name of Intervention: " formik={formik} />
-                <Reuseable.Input fieldName="clientAddress" fieldType="text" fieldLabel="Client Address:  " formik={formik} />
+                <Reuseable.Input fieldName="nameOfIntervention" fieldLabel="Name of Intervention: " formik={formik} />
+                <Reuseable.Input fieldName="clientAddress" fieldLabel="Client Address:  " formik={formik} />
                 <Reuseable.InputFile fieldName="photosOfIntervention" fieldType="file" fieldLabel="Photos of intervention  " formik={formik} />
-                <Reuseable.Input fieldName="clientEmail" fieldType="text" fieldLabel="Email of Client: " formik={formik} />
+                <Reuseable.Input fieldName="clientEmail" fieldLabel="Email of Client: " required={false} formik={formik} />
 
                 <Reuseable.SelectDropdown 
                     fieldName="appointmentType" 
-                    fieldLabel="What type of appointment was it?" 
+                    fieldLabel="What type of appointment was it? " 
                     formik={formik} 
                     options={appointmentTypeOptions}
                 />
                 { formik.values.appointmentType == "quote" && (
                     <>
                         <Reuseable.Textarea fieldName="reportPublicQuote" fieldLabel="Report (visable by client):  " formik={formik} />
-                        <Reuseable.Textarea fieldName="reportPrivateQuote" fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
+                        <Reuseable.Textarea fieldName="reportPrivateQuote" required={false} fieldLabel="Remarks for support (invisible to client):  " formik={formik} />
                         <Reuseable.Input fieldName="arrivalTimeAtClientQuote"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
                         <Reuseable.SelectDropdown 
                             fieldName="durationOfAppointmentQuote" 
@@ -172,7 +169,7 @@ const UserForm = () => {
                 )}
                 { formik.values.appointmentType == "cancelled" && (
                     <>
-                        <Reuseable.Textarea fieldName="reasonsForCancellation" fieldLabel="Reasons for cancellation:  " formik={formik} />
+                        <Reuseable.Textarea fieldName="reasonsForCancellationCancelled" fieldLabel="Reasons for cancellation:  " formik={formik} />
                         <Reuseable.Input fieldName="arrivalTimeAtClientCancelled"  fieldType="time" fieldLabel="Arrival time at client: " formik={formik} />
                         <Reuseable.SelectDropdown 
                             fieldName="durationOfInterventionCancelled" 
@@ -187,6 +184,7 @@ const UserForm = () => {
                         type="submit"
                         classes="btn primary-bg"
                         text="Submit Form"
+                        formik={formik}
                     ></Reuseable.Button>
                 </div> 
 
